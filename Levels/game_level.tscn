@@ -337,7 +337,7 @@ tile_set = SubResource("TileSet_5qucc")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(164, 56)
-zoom = Vector2(0.8, 0.8)
+zoom = Vector2(3, 3)
 limit_left = -140
 limit_top = -130
 limit_right = 580

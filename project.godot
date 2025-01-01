@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Farmdo"
-run/main_scene="res://Levels/game_level.tscn"
+run/main_scene="res://Levels/main_menu.tscn"
 config/features=PackedStringArray("4.3", "C#", "Mobile")
 config/icon="res://icon.svg"
 
@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 window/size/viewport_width=1280
 window/size/viewport_height=720
 window/stretch/mode="canvas_items"
-window/stretch/scale=4.0
 
 [dotnet]
 
