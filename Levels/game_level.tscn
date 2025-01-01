@@ -311,6 +311,7 @@ sources/4 = SubResource("TileSetAtlasSource_afdc2")
 sources/6 = SubResource("TileSetAtlasSource_1yyev")
 
 [node name="GameLevel" type="Node2D"]
+y_sort_enabled = true
 
 [node name="PlayerCat" parent="." instance=ExtResource("1_l5vh0")]
 position = Vector2(164, 56)
@@ -336,8 +337,20 @@ tile_set = SubResource("TileSet_5qucc")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(164, 56)
+zoom = Vector2(0.8, 0.8)
+limit_left = -140
+limit_top = -130
+limit_right = 580
+limit_bottom = 360
+limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
 
 [node name="Cow" parent="." instance=ExtResource("8_pliui")]
-position = Vector2(127, 51)
+position = Vector2(127, 76)
+
+[node name="Cow2" parent="." instance=ExtResource("8_pliui")]
+position = Vector2(79, 102)
+
+[node name="Cow3" parent="." instance=ExtResource("8_pliui")]
+position = Vector2(77, 57)

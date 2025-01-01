@@ -4,7 +4,13 @@ using Godot;
 public partial class Cow : CharacterBody2D
 {
 	[Export]
-	public float MoveSpeed { get; set; } = 30;
+	public float MoveSpeed { get; set; } = 20;
+
+	[Export]
+	public float IdleTime { get; set; } = 5;
+
+	[Export]
+	public float WalkTime { get; set; } = 2;
 
 	public enum COW_STATE 
 	{
@@ -15,6 +21,8 @@ public partial class Cow : CharacterBody2D
 	private Logger logger;
 	public AnimationTree _animationTree;
 	public AnimationNodeStateMachinePlayback _animationStateMachine;
+	public Sprite2D _spriteCow;
+	public Timer _timer;
 
 	private Vector2 MoveDirection = Vector2.Zero;
 	private COW_STATE CurrentState = COW_STATE.IDLE;
@@ -27,29 +35,42 @@ public partial class Cow : CharacterBody2D
 
 		_animationTree = GetNode<AnimationTree>("AnimationTree");
 		_animationStateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
+		_spriteCow = GetNode<Sprite2D>("Sprite2D");
+		_timer = GetNode<Timer>("Timer");
 
-		SelectNewDirection();
+		PickNewState();
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
 		base._PhysicsProcess(delta);
+		if (CurrentState == COW_STATE.WALK) {
+			Velocity = MoveDirection * MoveSpeed;
+			MoveAndSlide();	
+		}
+	}
 
-		Velocity = MoveDirection * MoveSpeed;
-
-		MoveAndSlide();
+	public void OnTimerTimeout()
+	{
+		PickNewState();
 	}
 
 	private void SelectNewDirection()
 	{
+		var values = new[] { -1, 1 };
 		MoveDirection = new Vector2(
-			new Random().Next(-1, 1),
-			new Random().Next(-1, 1)
+			values[new Random().Next(values.Length)],
+			values[new Random().Next(values.Length)]
 		);
 
-		if (MoveDirection.X == 0)
+		logger.trace($"New direction {MoveDirection.X}");
+		if (MoveDirection.X < 0)
 		{
-			
+			_spriteCow.FlipH = true;
+		} 
+		else
+		{
+			_spriteCow.FlipH = false;
 		}
 	}
 
@@ -59,11 +80,14 @@ public partial class Cow : CharacterBody2D
 		{
 			_animationStateMachine.Travel("Walk");
 			CurrentState = COW_STATE.WALK;
+			SelectNewDirection();
+			_timer.Start(WalkTime);
 		}
 		else
 		{
 			_animationStateMachine.Travel("Idle");
 			CurrentState = COW_STATE.IDLE;
+			_timer.Start(IdleTime);
 		}
 	}
 

@@ -11,6 +11,7 @@ public partial class PlayerCat : CharacterBody2D
 	private Logger logger;
 	public AnimationTree _animationTree;
 	public AnimationNodeStateMachinePlayback _animationStateMachine;
+	public Camera2D _camera;
 
 	public override void _Ready()
 	{
@@ -21,6 +22,7 @@ public partial class PlayerCat : CharacterBody2D
 		_animationTree = GetNode<AnimationTree>("AnimationTree");
 		_animationTree.Set("parameters/Idle/blend_position", StartingDirection);
 		_animationStateMachine = (AnimationNodeStateMachinePlayback)_animationTree.Get("parameters/playback");
+		_camera = GetNode<Camera2D>("Camera2D");
 	}
 
 	public override void _PhysicsProcess(double delta)

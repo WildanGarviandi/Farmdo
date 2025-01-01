@@ -3,24 +3,8 @@
 [ext_resource type="Script" path="res://Characters/Cow.cs" id="1_0ksrw"]
 [ext_resource type="Texture2D" uid="uid://ds2ypao1c5ifw" path="res://Art/Characters/Free Cow Sprites.png" id="1_q3650"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sya3e"]
-radius = 6.505
-height = 33.709
-
-[sub_resource type="Animation" id="Animation_kvxmk"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_41rkd"]
+size = Vector2(6.80429, 24.0454)
 
 [sub_resource type="Animation" id="Animation_c8j2a"]
 resource_name = "Idle"
@@ -37,6 +21,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 2, 0, 2, 0, 1, 0]
+}
+
+[sub_resource type="Animation" id="Animation_kvxmk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
 }
 
 [sub_resource type="Animation" id="Animation_x5gdh"]
@@ -137,10 +136,10 @@ hframes = 3
 vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(3.55271e-15, 7)
+position = Vector2(-1.44012, 10)
 rotation = 1.5708
 scale = Vector2(0.881796, 0.711976)
-shape = SubResource("CapsuleShape2D_sya3e")
+shape = SubResource("RectangleShape2D_41rkd")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -152,3 +151,7 @@ tree_root = SubResource("AnimationNodeStateMachine_hwwho")
 anim_player = NodePath("../AnimationPlayer")
 parameters/Idle/blend_position = Vector2(0, 0)
 parameters/Walk/blend_position = Vector2(0, 0)
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
